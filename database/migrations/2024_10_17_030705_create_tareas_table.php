@@ -14,6 +14,7 @@ return new class extends Migration {
     {
         Schema::create('tareas', function (Blueprint $table) {
             $table->id();
+            $table->string('picture', 512)->nullable();
             $table->integer('order')->default(1);
             $table->string('grupo',128)->nullable();
             $table->string('titulo', 128);
