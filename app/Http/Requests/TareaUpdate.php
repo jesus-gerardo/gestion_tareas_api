@@ -24,7 +24,10 @@ class TareaUpdate extends FormRequest
     public function rules()
     {
         return [
-            //
+            'titulo' => ['required'],
+            'descripcion' => ['nullable'],
+            'fecha_creacion' => ['required', 'date'],
+            'fecha_finalizacion' => ['nullable', 'date']
         ];
     }
 }

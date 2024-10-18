@@ -25,9 +25,9 @@ trait TareaService
         return Tarea::create($request);
     }
 
-    public function update()
+    public function update(Tarea $tarea, $request)
     {
-
+        return $tarea->update($request);
     }
 
     public function delete()

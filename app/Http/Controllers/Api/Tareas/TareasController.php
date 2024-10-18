@@ -29,6 +29,11 @@ class TareasController extends Controller
     {
         try {
             $data = $request->validated();
+
+            if ($request->has('picture')) {
+                $picture = $request->file('picture');
+            }
+
             $data['order'] = $this->getNumberRows() + 1;
             $tarea = $this->create($data);
             return new JsonResponse([
@@ -48,11 +53,26 @@ class TareasController extends Controller
 
     public function update(Tarea $tarea, TareaUpdate $request): JsonResponse
     {
-        return new JsonResponse([
-            'success' => true,
-            'data' => $tarea,
-            'msg' => 'Tarea creada con éxito'
-        ], 200);
+        try {
+            $data = $request->validated();
+
+            if ($request->has('picture')) {
+                $picture = $request->file('picture');
+            }
+
+            $tarea = $this->update($tarea, $data);
+            return new JsonResponse([
+                'success' => true,
+                'data' => $tarea,
+                'msg' => 'Tarea creada con éxito'
+            ], 200);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'success' => false,
+                'data' => null,
+                'msg' => 'Error al editar la tarea'
+            ], 200);
+        }
     }
 
 
@@ -72,7 +92,8 @@ class TareasController extends Controller
         }
     }
 
-    public function ordenamiento(Request $request){
+    public function ordenamiento(Request $request)
+    {
 
     }
 }
