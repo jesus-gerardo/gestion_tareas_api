@@ -27,7 +27,8 @@ class TareaCreate extends FormRequest
             'titulo' => ['required'],
             'descripcion' => ['nullable'],
             'fecha_creacion' => ['required', 'date'],
-            'fecha_finalizacion' => ['nullable', 'date']
+            'fecha_finalizacion' => ['nullable', 'date'],
+            'estado' => ['in:pendiente,progreso,completado']
         ];
     }
 }

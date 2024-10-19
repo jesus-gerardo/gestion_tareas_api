@@ -25,9 +25,15 @@ trait TareaService
         return Tarea::create($request);
     }
 
-    public function update(Tarea $tarea, $request)
+    public function edit(Tarea $tarea, $data)
     {
-        return $tarea->update($request);
+        $tarea->titulo = $data->titulo;
+        $tarea->descripcion = $data->descripcion;
+        $tarea->estado = $data->estado;
+        $tarea->fecha_creacion = $data->fecha_creacion;
+        $tarea->fecha_finalizacion = $data->fecha_finalizacion;
+        $tarea->save();
+        return $tarea;
     }
 
     public function delete()

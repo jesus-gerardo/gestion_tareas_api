@@ -32,6 +32,10 @@ class TareasController extends Controller
 
             if ($request->has('picture')) {
                 $picture = $request->file('picture');
+                $path = $picture->store('pictures', 'public'); // Por ejemplo, guardando en 'storage/app/public/pictures'
+
+                // Añadir la ruta de la imagen al array de datos
+                $data['picture'] = $path;
             }
 
             $data['order'] = $this->getNumberRows() + 1;
@@ -55,21 +59,25 @@ class TareasController extends Controller
     {
         try {
             $data = $request->validated();
-
             if ($request->has('picture')) {
                 $picture = $request->file('picture');
+                $path = $picture->store('pictures', 'public'); // Por ejemplo, guardando en 'storage/app/public/pictures'
+
+                // Añadir la ruta de la imagen al array de datos
+                $data['picture'] = $path;
             }
 
-            $tarea = $this->update($tarea, $data);
+            $edit = $this->edit($tarea, (object) $data);
             return new JsonResponse([
                 'success' => true,
-                'data' => $tarea,
-                'msg' => 'Tarea creada con éxito'
+                'data' => $edit,
+                'msg' => 'Tarea Editada con éxito'
             ], 200);
         } catch (\Exception $e) {
             return new JsonResponse([
                 'success' => false,
                 'data' => null,
+                'error' => $e->getMessage(),
                 'msg' => 'Error al editar la tarea'
             ], 200);
         }

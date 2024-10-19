@@ -11,6 +11,7 @@ class Tarea extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'titulo',
+        'picture',
         'order',
         'descripcion',
         'estado',
