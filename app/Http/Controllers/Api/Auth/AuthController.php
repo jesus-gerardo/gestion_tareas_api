@@ -21,7 +21,9 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages("Usuario no encontrado");
+            throw ValidationException::withMessages([
+                'Error' => ['Correo/Contraseña Incorrecto.'],
+            ]);
         }
 
         $token = $user->createToken('API Token')->plainTextToken;
