@@ -98,6 +98,22 @@ class TareasController extends Controller
         }
     }
 
+    public function cambiarEstado(Tarea $tarea, Request $request)
+    {
+        try {
+            $tarea->estado = $request->input('estado', 'pendiente');
+            $tarea->save();
+            return new JsonResponse([
+                'success' => true,
+            ], 200);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ], 200);
+        }
+    }
+
     public function ordenamiento(Request $request)
     {
         try {

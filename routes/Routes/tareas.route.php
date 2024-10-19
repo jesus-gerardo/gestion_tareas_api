@@ -9,4 +9,5 @@ Route::prefix('tareas')->group(function () {
     Route::put('/{tarea}', [TareasController::class, 'update'])->name('tareas:update');
     Route::delete('/{tarea}', [TareasController::class, 'destroy'])->name('tareas:delete');
     Route::post('/ordenar', [TareasController::class, 'ordenamiento'])->name('tareas:ordenamiento');
+    Route::put('/cambio/{tarea}', [TareasController::class, 'cambiarEstado'])->name('tareas:cambio');
 });
