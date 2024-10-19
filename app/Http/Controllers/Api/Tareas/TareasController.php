@@ -82,8 +82,6 @@ class TareasController extends Controller
             ], 200);
         }
     }
-
-
     public function destroy(Tarea $tarea): JsonResponse
     {
         try {
@@ -102,6 +100,19 @@ class TareasController extends Controller
 
     public function ordenamiento(Request $request)
     {
-
+        try {
+            $lista = $request->input('list', []);
+            foreach ($lista as $list) {
+                Tarea::find($list['id'])->update(['order' => $list['order'] + 1]);
+            }
+            return new JsonResponse([
+                'success' => true,
+            ], 200);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => $e->getMessage()
+            ], 200);
+        }
     }
 }

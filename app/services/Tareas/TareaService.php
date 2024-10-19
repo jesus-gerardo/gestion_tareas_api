@@ -8,7 +8,7 @@ trait TareaService
 {
     public function findAll(): Collection
     {
-        return Tarea::all();
+        return Tarea::orderBy('order', 'asc')->get();
     }
 
     public function findOne(int $id): Tarea
