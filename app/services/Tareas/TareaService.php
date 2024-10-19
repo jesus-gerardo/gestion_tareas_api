@@ -14,13 +14,10 @@ trait TareaService
     public function findOne(int $id): Tarea
     {
         $tareas = Tarea::find($id);
-        if (!$tareas) {
-
-        }
         return $tareas;
     }
 
-    public function create($request):Tarea
+    public function create($request): Tarea
     {
         return Tarea::create($request);
     }
@@ -34,11 +31,6 @@ trait TareaService
         $tarea->fecha_finalizacion = $data->fecha_finalizacion;
         $tarea->save();
         return $tarea;
-    }
-
-    public function delete()
-    {
-
     }
 
     public function getNumberRows(): int

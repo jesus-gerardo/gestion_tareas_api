@@ -10,6 +10,7 @@ use App\Services\Tareas\TareaService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TareasController extends Controller
 {
@@ -32,9 +33,8 @@ class TareasController extends Controller
 
             if ($request->has('picture')) {
                 $picture = $request->file('picture');
-                $path = $picture->store('pictures', 'public'); // Por ejemplo, guardando en 'storage/app/public/pictures'
-
-                // Añadir la ruta de la imagen al array de datos
+                $path = $picture->store('pictures', 'public'); // lo guardamos en el public
+                // guardamos la ruta donde se guardo
                 $data['picture'] = $path;
             }
 
@@ -61,10 +61,15 @@ class TareasController extends Controller
             $data = $request->validated();
             if ($request->has('picture')) {
                 $picture = $request->file('picture');
-                $path = $picture->store('pictures', 'public'); // Por ejemplo, guardando en 'storage/app/public/pictures'
-
-                // Añadir la ruta de la imagen al array de datos
-                $data['picture'] = $path;
+                $path = $picture->store('pictures', 'public'); // lo guardamos en el public
+        
+                // verificamos que exista algo en la column
+                if ($tarea->picture) {
+                    // eliminamos la imagen anterior
+                    Storage::disk('public')->delete($tarea->picture);
+                }
+                // guardamos la ruta donde se guardo
+                $tarea->picture = $path;
             }
 
             $edit = $this->edit($tarea, (object) $data);
